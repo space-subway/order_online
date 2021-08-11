@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.repository;
+package com.online.booking.core.web.request.exception;
 
-import com.online.booking.core.domain.Item;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+public class UserAlreadyExistException extends Exception {
 
-/**
- * Repository interface to access {@link Item}s.
- *
- */
+    public UserAlreadyExistException() {
+        super();
+    }
 
-@Repository
-public interface ItemRepository extends MongoRepository<Item, String> {
-    Item findByTittle(String tittle );
+
+    public UserAlreadyExistException(String message) {
+        super(message);
+    }
+
+
+    public UserAlreadyExistException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

@@ -21,8 +21,8 @@ import org.springframework.util.Assert;
 /**
  * An address.
  *
- * @author
  */
+
 public class Address {
     private final String street, city, country;
 

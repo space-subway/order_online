@@ -27,8 +27,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author
+ * Class for order representation.
  */
+
 @Document
 public class Order extends AbstractDocument {
     @DBRef

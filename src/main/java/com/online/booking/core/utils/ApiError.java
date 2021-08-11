@@ -14,18 +14,27 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.repository;
+package com.online.booking.core.utils;
 
-import com.online.booking.core.domain.Item;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 /**
- * Repository interface to access {@link Item}s.
+ * Class for handle errors in requests.
  *
  */
 
-@Repository
-public interface ItemRepository extends MongoRepository<Item, String> {
-    Item findByTittle(String tittle );
+public class ApiError {
+    private List<String> errors;
+
+    public ApiError(List<String> errors) {
+        this.errors = errors;
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
 }

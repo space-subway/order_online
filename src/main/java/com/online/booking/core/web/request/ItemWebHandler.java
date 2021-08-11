@@ -18,8 +18,12 @@ package com.online.booking.core.web.request;
 
 import com.online.booking.core.domain.Item;
 import com.online.booking.core.repository.ItemRepository;
+import com.online.booking.core.web.request.exception.ItemCreationException;
+import com.online.booking.core.web.request.exception.UnknownIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,14 +60,14 @@ public class ItemWebHandler {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Item details(
+    public ResponseEntity<Item> details(
             @PathVariable( value = "id" ) String id
-    ){
+    ) throws UnknownIdentifierException {
         Optional<Item> o = itemRepository.findById( id );
 
-        if( o.isPresent() ) return o.get();
+        if( o.isPresent() ) return new ResponseEntity<>(o.get(), HttpStatus.FOUND );
 
-        return null;
+        throw new UnknownIdentifierException( id );
     }
 
     /**
@@ -71,19 +75,25 @@ public class ItemWebHandler {
      *
      * @return Code of operation
      */
-    /*@RequestMapping(
+
+    /**
+     * Create new item and save it
+     *
+     * @return Code of operation
+     */
+    @RequestMapping(
             value = "/create",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseMessage create(@RequestBody Item item){
+    public ResponseEntity<Item> create(@RequestBody Item item) throws ItemCreationException {
 
-        itemRepository.save(item);
+        Item createdItem = itemRepository.insert(item);
 
-        ResponseMessage message = new ResponseMessage( item.getId() );
+        if( createdItem == null ) throw new ItemCreationException( Item.class.getName() );
 
-        return message;
-    }*/
+        return new ResponseEntity<>( createdItem, HttpStatus.CREATED );
+    }
 
     /**
      * Delete item by id

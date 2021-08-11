@@ -29,7 +29,6 @@ import org.springframework.util.Assert;
 /**
  * Value object to represent email addresses.
  *
- * @author
  */
 
 @Document

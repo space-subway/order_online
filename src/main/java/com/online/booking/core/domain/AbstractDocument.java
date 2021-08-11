@@ -21,8 +21,8 @@ import org.springframework.data.annotation.Id;
 /**
  * Base class for domain classes.
  *
- * @author
  */
+
 public class AbstractDocument {
 
     @Id

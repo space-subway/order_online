@@ -25,8 +25,8 @@ import java.math.BigDecimal;
 /**
  * Class for any item representation.
  *
- * @author
  */
+
 @Document
 public class Item extends AbstractDocument {
 

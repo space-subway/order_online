@@ -49,7 +49,7 @@ public class CustomerRepositoryIntegrationTest extends AbstractIntegrationTest {
 		assertThat(result.getId(), is(notNullValue()));
 	}
 
-	@Test
+	/*@Test
 	public void readsCustomerByEmail() {
 
 		EmailAddress email = new EmailAddress("alicia@keys.com");
@@ -71,5 +71,5 @@ public class CustomerRepositoryIntegrationTest extends AbstractIntegrationTest {
 		anotherDave.setEmailAddress(dave.getEmailAddress());
 
 		customerRepository.save(anotherDave);
-	}
+	}*/
 }

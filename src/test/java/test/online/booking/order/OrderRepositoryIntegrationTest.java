@@ -18,6 +18,7 @@ package test.online.booking.order;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.online.booking.core.domain.*;
 import com.online.booking.core.repository.CustomerRepository;
@@ -48,11 +49,11 @@ public class OrderRepositoryIntegrationTest extends AbstractIntegrationTest {
 	@Test
 	public void createOrder() {
 
-		Customer user = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
+		Optional<Customer> user = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
 
 		Item iPad = itemRepository.findAll().iterator().next();
 
-		Order order = new Order(user, user.getAddresses().iterator().next());
+		Order order = new Order(user.get(), user.get().getAddresses().iterator().next());
 		order.add(new OrderItem(iPad));
 
 		order = orderRepository.save(order);
@@ -62,8 +63,8 @@ public class OrderRepositoryIntegrationTest extends AbstractIntegrationTest {
 	@Test
 	public void readOrder() {
 
-		Customer dave = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
-		List<Order> orders = orderRepository.findByCustomer(dave);
+		Optional<Customer> dave = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
+		List<Order> orders = orderRepository.findByCustomer(dave.get());
 
 		Order order = orders.iterator().next();
 		OrderItem orderItem = order.getLineItems().stream().findFirst().orElse(null);

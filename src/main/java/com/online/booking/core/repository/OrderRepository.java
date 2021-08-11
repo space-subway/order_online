@@ -26,7 +26,6 @@ import java.util.List;
 /**
  * Repository to access {@link Order}s.
  *
- * @author
  */
 
 @Repository

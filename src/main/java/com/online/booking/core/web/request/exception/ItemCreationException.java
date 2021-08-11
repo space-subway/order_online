@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.repository;
+package com.online.booking.core.web.request.exception;
 
-import com.online.booking.core.domain.Item;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+public class ItemCreationException extends Exception {
 
-/**
- * Repository interface to access {@link Item}s.
- *
- */
+    /**
+     * Constructor for any item creation exception
+     *
+     * @param className name of class creation of throws exception
+     */
+    public ItemCreationException(String className) {
+        super( className );
+    }
 
-@Repository
-public interface ItemRepository extends MongoRepository<Item, String> {
-    Item findByTittle(String tittle );
+    @Override
+    public String getMessage() {
+        return "Failed while creation new Item: " + getMessage();
+    }
 }

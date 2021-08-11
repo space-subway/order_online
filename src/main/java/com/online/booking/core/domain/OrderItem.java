@@ -23,8 +23,9 @@ import org.springframework.util.Assert;
 import java.math.BigDecimal;
 
 /**
- * @author
+ * Class for line item representation in online order.
  */
+
 @Document
 public class OrderItem extends AbstractDocument {
 

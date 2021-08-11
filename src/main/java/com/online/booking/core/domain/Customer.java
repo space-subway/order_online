@@ -28,8 +28,8 @@ import java.util.Set;
 /**
  * Class for users store and representation.
  *
- * @author
  */
+
 @Document
 public class Customer extends AbstractDocument {
 

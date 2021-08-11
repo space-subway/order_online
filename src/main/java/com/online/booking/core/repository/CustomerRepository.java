@@ -21,13 +21,16 @@ import com.online.booking.core.domain.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Repository interface to access {@link Customer}s.
  *
- * @author
  */
+
 @Repository
 public interface CustomerRepository extends MongoRepository<Customer, String> {
+
     /**
      * Saves the given {@link Customer}. #
      *
@@ -42,5 +45,5 @@ public interface CustomerRepository extends MongoRepository<Customer, String> {
      * @param emailAddress
      * @return
      */
-    Customer findByEmailAddress(EmailAddress emailAddress);
+    Optional<Customer> findByEmailAddress(EmailAddress emailAddress);
 }

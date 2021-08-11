@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.repository;
+package com.online.booking.core.web.request.exception;
 
-import com.online.booking.core.domain.Item;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+public class UnknownIdentifierException extends Exception {
+    protected String identifier;
 
-/**
- * Repository interface to access {@link Item}s.
- *
- */
+    public static UnknownIdentifierException createWith(String identifier) {
+        return new UnknownIdentifierException(identifier);
+    }
 
-@Repository
-public interface ItemRepository extends MongoRepository<Item, String> {
-    Item findByTittle(String tittle );
+    public UnknownIdentifierException(String identifier) {
+        this.identifier = identifier;
+    }
+
+    @Override
+    public String getMessage() {
+        return "Identifier '" + identifier + "' not found";
+    }
+
 }

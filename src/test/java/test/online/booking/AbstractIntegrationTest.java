@@ -16,7 +16,7 @@
 
 package test.online.booking;
 
-import com.online.booking.core.document.*;
+import com.online.booking.core.domain.*;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,10 @@ import java.math.BigDecimal;
  * @author
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring-dispatecher-servlet.xml" , "file:src/main/webapp/WEB-INF/spring-data-configuration.xml"})
+@ContextConfiguration(locations = {
+		"file:src/main/webapp/WEB-INF/spring-dispatecher-servlet.xml",
+		"file:src/main/webapp/WEB-INF/spring-data-configuration.xml"
+})
 public abstract class AbstractIntegrationTest {
 
 	@Autowired
@@ -46,7 +49,7 @@ public abstract class AbstractIntegrationTest {
 		// Customers
 		mongoTemplate.dropCollection("user");
 
-		User dave = new User("Dave", "Matthews");
+		Customer dave = new Customer("Dave", "Matthews");
 		dave.setEmailAddress(new EmailAddress("dave@dmband.com"));
 		Address address = new Address("Broadway","New York","United States");
 		dave.add(address);

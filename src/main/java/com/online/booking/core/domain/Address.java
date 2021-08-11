@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.document;
+package com.online.booking.core.domain;
 
 import org.springframework.util.Assert;
 

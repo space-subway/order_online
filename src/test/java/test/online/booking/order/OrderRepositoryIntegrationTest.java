@@ -19,10 +19,10 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import com.online.booking.core.document.*;
+import com.online.booking.core.domain.*;
+import com.online.booking.core.repository.CustomerRepository;
 import com.online.booking.core.repository.ItemRepository;
 import com.online.booking.core.repository.OrderRepository;
-import com.online.booking.core.repository.UserRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import test.online.booking.AbstractIntegrationTest;
@@ -42,13 +42,13 @@ public class OrderRepositoryIntegrationTest extends AbstractIntegrationTest {
 	ItemRepository 	itemRepository;
 
 	@Autowired
-	UserRepository 	userRepository;
+	CustomerRepository customerRepository;
 
 
 	@Test
 	public void createOrder() {
 
-		User user = userRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
+		Customer user = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
 
 		Item iPad = itemRepository.findAll().iterator().next();
 
@@ -62,8 +62,16 @@ public class OrderRepositoryIntegrationTest extends AbstractIntegrationTest {
 	@Test
 	public void readOrder() {
 
-		User dave = userRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
+		Customer dave = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
 		List<Order> orders = orderRepository.findByCustomer(dave);
 
+		Order order = orders.iterator().next();
+		OrderItem orderItem = order.getLineItems().stream().findFirst().orElse(null);
+
+		assertNotNull(orderItem);
+
+		Item iPad = itemRepository.findAll().iterator().next();
+
+		assertEquals( iPad.getPrice(), orderItem.getTotal() );
 	}
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.document;
+package com.online.booking.core.domain;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

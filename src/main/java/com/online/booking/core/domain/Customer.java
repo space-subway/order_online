@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.document;
+package com.online.booking.core.domain;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,7 +31,7 @@ import java.util.Set;
  * @author
  */
 @Document
-public class User extends AbstractDocument {
+public class Customer extends AbstractDocument {
 
     private String firstname, lastname;
 
@@ -41,12 +41,12 @@ public class User extends AbstractDocument {
     private Set<Address> addresses = new HashSet<Address>();
 
     /**
-     * Creates a new {@link User} from the given firstname and lastname.
+     * Creates a new {@link Customer} from the given firstname and lastname.
      *
      * @param firstname must not be {@literal null} or empty.
      * @param lastname must not be {@literal null} or empty.
      */
-    public User(String firstname, String lastname) {
+    public Customer(String firstname, String lastname) {
 
         Assert.hasText(firstname, "First name must not be null or empty!");
         Assert.hasText(lastname, "Last name must not be null or empty!");
@@ -55,23 +55,23 @@ public class User extends AbstractDocument {
         this.lastname = lastname;
     }
 
-    protected User() {
+    protected Customer() {
 
     }
 
     /**
-     * Adds the given {@link Address} to the {@link User}.
+     * Adds the given {@link Address} to the {@link Customer}.
      *
      * @param address must not be {@literal null}.
      */
     public void add(Address address) {
 
-        Assert.notNull(address);
+        Assert.notNull(address, "Address must not be null or empty!");
         this.addresses.add(address);
     }
 
     /**
-     * Returns the firstname of the {@link User}.
+     * Returns the firstname of the {@link Customer}.
      *
      * @return
      */
@@ -80,7 +80,7 @@ public class User extends AbstractDocument {
     }
 
     /**
-     * Returns the lastname of the {@link User}.
+     * Returns the lastname of the {@link Customer}.
      *
      * @return
      */
@@ -89,7 +89,7 @@ public class User extends AbstractDocument {
     }
 
     /**
-     * Sets the lastname of the {@link User}.
+     * Sets the lastname of the {@link Customer}.
      *
      * @param lastname
      */
@@ -98,7 +98,7 @@ public class User extends AbstractDocument {
     }
 
     /**
-     * Returns the {@link EmailAddress} of the {@link User}.
+     * Returns the {@link EmailAddress} of the {@link Customer}.
      *
      * @return
      */
@@ -107,7 +107,7 @@ public class User extends AbstractDocument {
     }
 
     /**
-     * Sets the {@link User}'s {@link EmailAddress}.
+     * Sets the {@link Customer}'s {@link EmailAddress}.
      *
      * @param emailAddress must not be {@literal null}.
      */
@@ -116,7 +116,7 @@ public class User extends AbstractDocument {
     }
 
     /**
-     * Return the {@link User}'s addresses.
+     * Return the {@link Customer}'s addresses.
      *
      * @return
      */

@@ -16,26 +16,19 @@
 
 package test.online.booking.web.request;
 
-import io.restassured.RestAssured;
-import io.restassured.parsing.Parser;
-import org.junit.Before;
+import com.online.booking.core.domain.Item;
+import com.online.booking.core.repository.ItemRepository;
+import io.restassured.http.ContentType;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring-dispatecher-servlet.xml" , "file:src/main/webapp/WEB-INF/spring-data-configuration.xml"})
-public class ItemWebHandlerTest extends RestAssured {
+public class ItemWebHandlerIntegrationTest extends AbstractWebHandlerIntegrationTest {
 
-    @Before
-    public void setup() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8080;
-        RestAssured.defaultParser = Parser.JSON;
-    }
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Test
     public void whenLogRequest_thenOK() {
@@ -51,17 +44,6 @@ public class ItemWebHandlerTest extends RestAssured {
     }
 
     @Test
-    public void whenLogResponseIfErrorOccurred_thenSuccess() {
-
-        when().get("/product/list")
-                .then().log().ifError();
-        when().get("/product/list")
-                .then().log().ifStatusCodeIsEqualTo(500);
-        when().get("/product/list")
-                .then().log().ifStatusCodeMatches(greaterThan(200));
-    }
-
-    @Test
     public void whenLogOnlyIfValidationFailed_thenSuccess() {
         when().get("/product/list")
                 .then().log().ifValidationFails().statusCode(200);
@@ -69,6 +51,21 @@ public class ItemWebHandlerTest extends RestAssured {
         given().log().ifValidationFails()
                 .when().get("/product/list")
                 .then().statusCode(200);
+    }
+
+    @Test
+    public void findProductByIdRestTest() {
+        Item iPad = itemRepository.findByTittle("iPad");
+
+        given()
+                .contentType(ContentType.JSON)
+                .pathParam("id", iPad.getId())
+                .when()
+                .get("/product/{id}")
+                .then()
+                .statusCode(200)
+                .body("tittle", equalTo("iPad"))
+                .body("price", equalTo(499));
     }
 
 }

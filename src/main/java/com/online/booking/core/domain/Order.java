@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.document;
+package com.online.booking.core.domain;
 
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -32,18 +32,18 @@ import java.util.Set;
 @Document
 public class Order extends AbstractDocument {
     @DBRef
-    private User            customer;
+    private Customer        customer;
     private Address         shippingAddress;
     private Set<OrderItem>  lineItems = new HashSet<OrderItem>();
 
     /**
-     * Creates a new {@link Order} for the given {@link User}.
+     * Creates a new {@link Order} for the given {@link Customer}.
      *
      * @param customer must not be {@literal null}.
      * @param shippingAddress must not be {@literal null}.
      */
     @PersistenceConstructor
-    public Order(User customer, Address shippingAddress) {
+    public Order(Customer customer, Address shippingAddress) {
 
         Assert.notNull(customer, "Order customer must not be null");
         Assert.notNull(shippingAddress, "Shipping address must not be null");
@@ -62,11 +62,11 @@ public class Order extends AbstractDocument {
     }
 
     /**
-     * Returns the {@link User} who placed the {@link Order}.
+     * Returns the {@link Customer} who placed the {@link Order}.
      *
      * @return
      */
-    public User getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 

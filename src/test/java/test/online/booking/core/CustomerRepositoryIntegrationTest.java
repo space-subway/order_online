@@ -15,38 +15,37 @@
  */
 package test.online.booking.core;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
-import com.online.booking.core.document.Address;
-import com.online.booking.core.document.EmailAddress;
-import com.online.booking.core.document.User;
-import com.online.booking.core.repository.UserRepository;
+import com.online.booking.core.domain.Address;
+import com.online.booking.core.domain.Customer;
+import com.online.booking.core.domain.EmailAddress;
+import com.online.booking.core.repository.CustomerRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import test.online.booking.AbstractIntegrationTest;
 
 /**
- * Integration tests for {@link UserRepository}.
+ * Integration tests for {@link CustomerRepository}.
  * 
  * @author
  */
 public class CustomerRepositoryIntegrationTest extends AbstractIntegrationTest {
 
 	@Autowired
-	UserRepository userRepository;
+	CustomerRepository customerRepository;
 
 	@Test
-	public void savesCustomerCorrectly() {
-
+	public void customerReadWriteTest() {
 		EmailAddress email = new EmailAddress("alicia@keys.com");
 
-		User dave = new User("Alicia", "Keys");
-		dave.setEmailAddress(email);
-		dave.add(new Address("27 Broadway", "New York", "United States"));
+		Customer alicia = new Customer("Alicia", "Keys");
+		alicia.setEmailAddress(email);
+		alicia.add(new Address("27 Broadway", "New York", "United States"));
 
-		User result = userRepository.save(dave);
+		Customer result = customerRepository.save(alicia);
 		assertThat(result.getId(), is(notNullValue()));
 	}
 
@@ -54,23 +53,23 @@ public class CustomerRepositoryIntegrationTest extends AbstractIntegrationTest {
 	public void readsCustomerByEmail() {
 
 		EmailAddress email = new EmailAddress("alicia@keys.com");
-		User alicia = new User("Alicia", "Keys");
+		Customer alicia = new Customer("Alicia", "Keys");
 		alicia.setEmailAddress(email);
 
-		userRepository.save(alicia);
+		customerRepository.save(alicia);
 
-		User result = userRepository.findByEmailAddress(email);
+		Customer result = customerRepository.findByEmailAddress(email);
 		assertThat(result, is(alicia));
 	}
 
 	@Test(expected = DuplicateKeyException.class)
 	public void preventsDuplicateEmail() {
 
-		User dave = userRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
+		Customer dave = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
 
-		User anotherDave = new User("Dave", "Matthews");
+		Customer anotherDave = new Customer("Dave", "Matthews");
 		anotherDave.setEmailAddress(dave.getEmailAddress());
 
-		userRepository.save(anotherDave);
+		customerRepository.save(anotherDave);
 	}
 }

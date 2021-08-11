@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.document;
+package com.online.booking.core.domain;
 
 import org.springframework.data.annotation.Id;
 
 /**
- * Base class for document classes.
+ * Base class for domain classes.
  *
  * @author
  */
@@ -29,7 +29,7 @@ public class AbstractDocument {
     private String id;
 
     /**
-     * Returns the identifier of the document.
+     * Returns the identifier of the domain.
      *
      * @return the id
      */

@@ -16,9 +16,8 @@
 
 package com.online.booking.core.web.request;
 
-import com.online.booking.core.document.Item;
+import com.online.booking.core.domain.Item;
 import com.online.booking.core.repository.ItemRepository;
-import com.online.booking.core.utils.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -72,7 +71,7 @@ public class ItemWebHandler {
      *
      * @return Code of operation
      */
-    @RequestMapping(
+    /*@RequestMapping(
             value = "/create",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -84,14 +83,14 @@ public class ItemWebHandler {
         ResponseMessage message = new ResponseMessage( item.getId() );
 
         return message;
-    }
+    }*/
 
     /**
      * Delete item by id
      *
      * @return Code of operation
      */
-    @RequestMapping(
+    /*@RequestMapping(
             value = "/delete/{id}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -111,5 +110,5 @@ public class ItemWebHandler {
 
         message.setMessage( "ok" );
         return message;
-    }
+    }*/
 }

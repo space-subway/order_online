@@ -16,31 +16,31 @@
 
 package com.online.booking.core.repository;
 
-import com.online.booking.core.document.EmailAddress;
-import com.online.booking.core.document.User;
+import com.online.booking.core.domain.EmailAddress;
+import com.online.booking.core.domain.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository interface to access {@link User}s.
+ * Repository interface to access {@link Customer}s.
  *
  * @author
  */
 @Repository
-public interface UserRepository extends MongoRepository<User, String> {
+public interface CustomerRepository extends MongoRepository<Customer, String> {
     /**
-     * Saves the given {@link User}. #
+     * Saves the given {@link Customer}. #
      *
-     * @param user
+     * @param customer
      * @return
      */
-    User save(User user);
+    Customer save(Customer customer);
 
     /**
-     * Returns the {@link User} with the given {@link EmailAddress}.
+     * Returns the {@link Customer} with the given {@link EmailAddress}.
      *
      * @param emailAddress
      * @return
      */
-    User findByEmailAddress(EmailAddress emailAddress);
+    Customer findByEmailAddress(EmailAddress emailAddress);
 }

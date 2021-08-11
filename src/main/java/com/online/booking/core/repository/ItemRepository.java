@@ -16,7 +16,7 @@
 
 package com.online.booking.core.repository;
 
-import com.online.booking.core.document.Item;
+import com.online.booking.core.domain.Item;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -16,8 +16,8 @@
 
 package com.online.booking.core.repository;
 
-import com.online.booking.core.document.Order;
-import com.online.booking.core.document.User;
+import com.online.booking.core.domain.Customer;
+import com.online.booking.core.domain.Order;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -33,10 +33,10 @@ import java.util.List;
 public interface OrderRepository extends PagingAndSortingRepository<Order, String> {
 
     /**
-     * Returns all {@link Order}s of the given {@link User}.
+     * Returns all {@link Order}s of the given {@link Customer}.
      *
      * @param customer
      * @return
      */
-    List<Order> findByCustomer(User customer);
+    List<Order> findByCustomer(Customer customer);
 }

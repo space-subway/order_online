@@ -17,7 +17,7 @@ package test.online.booking.core;
 
 import static org.junit.Assert.*;
 import java.math.BigDecimal;
-import com.online.booking.core.document.Item;
+import com.online.booking.core.domain.Item;
 import com.online.booking.core.repository.ItemRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,6 @@ public class ProductRepositoryIntegrationTest extends AbstractIntegrationTest {
 	ItemRepository itemRepository;
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void createProduct() {
 
 		Item product = new Item("Camera bag", new BigDecimal(49.99));
@@ -45,7 +44,6 @@ public class ProductRepositoryIntegrationTest extends AbstractIntegrationTest {
 
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void findProductByTittle() {
 
 		Item product = itemRepository.findByTittle("Dock");

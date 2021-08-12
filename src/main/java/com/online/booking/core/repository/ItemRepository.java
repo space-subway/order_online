@@ -20,6 +20,8 @@ import com.online.booking.core.domain.Item;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Set;
+
 /**
  * Repository interface to access {@link Item}s.
  *
@@ -27,5 +29,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemRepository extends MongoRepository<Item, String> {
-    Item findByTittle(String tittle );
+    Set<Item> findByTittle(String tittle );
 }

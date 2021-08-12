@@ -41,12 +41,12 @@ public class CustomerService {
 
         if( user == null ) throw new NullPointerException("User must not be null!");
 
-        if( readByEmailAddress( user.getEmailAddress() ).isPresent() ) throw new DuplicateKeyException("User with email: " + user.getEmailAddress() + " already exist!");
+        if( readByEmailAddress( user.getEmailAddress() ) != null ) throw new DuplicateKeyException("User with email: " + user.getEmailAddress() + " already exist!");
 
         repository.save( user );
     }
 
-    public Optional<Customer> readByEmailAddress( EmailAddress email ){
+    public Customer readByEmailAddress( EmailAddress email ){
         return repository.findByEmailAddress( email );
     }
 

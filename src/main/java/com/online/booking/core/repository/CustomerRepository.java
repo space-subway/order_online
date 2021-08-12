@@ -45,5 +45,5 @@ public interface CustomerRepository extends MongoRepository<Customer, String> {
      * @param emailAddress
      * @return
      */
-    Optional<Customer> findByEmailAddress(EmailAddress emailAddress);
+    Customer findByEmailAddress(EmailAddress emailAddress);
 }

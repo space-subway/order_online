@@ -22,6 +22,9 @@ import io.restassured.http.ContentType;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Set;
+
+import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
@@ -55,7 +58,11 @@ public class ItemWebHandlerIntegrationTest extends AbstractWebHandlerIntegration
 
     @Test
     public void findProductByIdRestTest() {
-        Item iPad = itemRepository.findByTittle("iPad");
+        Set<Item> items = itemRepository.findByTittle("iPad");
+
+        Item iPad = items.stream().findFirst().orElse(null);
+
+        assertNotNull( iPad );
 
         given()
                 .contentType(ContentType.JSON)

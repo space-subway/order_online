@@ -56,7 +56,7 @@ public class ItemWebHandler {
      * @return Item
      */
     @RequestMapping(
-            value = "/list/{id}",
+            value = "/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -65,7 +65,7 @@ public class ItemWebHandler {
     ) throws UnknownIdentifierException {
         Optional<Item> o = itemRepository.findById( id );
 
-        if( o.isPresent() ) return new ResponseEntity<>(o.get(), HttpStatus.FOUND );
+        if( o.isPresent() ) return new ResponseEntity<>(o.get(), HttpStatus.OK );
 
         throw new UnknownIdentifierException( id );
     }

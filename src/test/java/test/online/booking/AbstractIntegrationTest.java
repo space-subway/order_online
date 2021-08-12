@@ -47,13 +47,13 @@ public abstract class AbstractIntegrationTest {
 	public void setUp() {
 
 		// Customers
-		mongoTemplate.dropCollection("user");
+		mongoTemplate.dropCollection("customer");
 
 		Customer dave = new Customer("Dave", "Matthews");
 		dave.setEmailAddress(new EmailAddress("dave@dmband.com"));
 		Address address = new Address("Broadway","New York","United States");
 		dave.add(address);
-		mongoTemplate.insert( dave, "user" );
+		mongoTemplate.insert( dave, "customer" );
 
 		// Products
 		mongoTemplate.dropCollection("item");

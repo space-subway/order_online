@@ -15,39 +15,54 @@
  */
 package test.online.booking.core;
 
-import static org.junit.Assert.*;
 import java.math.BigDecimal;
+import java.util.Set;
+
 import com.online.booking.core.domain.Item;
 import com.online.booking.core.repository.ItemRepository;
+import org.hamcrest.Matchers;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import test.online.booking.AbstractIntegrationTest;
+
+import static junit.framework.TestCase.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Integration tests for {@link ItemRepository}.
  * 
  * @author
  */
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProductRepositoryIntegrationTest extends AbstractIntegrationTest {
 
 	@Autowired
 	ItemRepository itemRepository;
 
 	@Test
-	public void createProduct() {
+	public void test1_createProduct() {
 
 		Item product = new Item("Camera bag", new BigDecimal(49.99));
 		product = itemRepository.save(product);
 
 		assertNotNull( product );
+		assertThat( product.getTittle(), Matchers.is("Camera bag") );
+		assertThat( product.getPrice(), Matchers.is(new BigDecimal(49.99)) );
 	}
 
 
 	@Test
-	public void findProductByTittle() {
+	public void test2_findProductByTittle() {
 
-		Item product = itemRepository.findByTittle("Dock");
+		Set<Item> items = itemRepository.findByTittle("Dock");
+
+		Item product = items.stream().findFirst().orElse(null);
 
 		assertNotNull( product );
+		assertThat( product.getTittle(), Matchers.is("Dock") );
+		assertThat( product.getPrice(), Matchers.is(new BigDecimal(49.0)) );
 	}
 }

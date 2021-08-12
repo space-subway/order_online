@@ -15,64 +15,77 @@
  */
 package test.online.booking.order;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertNotNull;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.online.booking.core.domain.*;
-import com.online.booking.core.repository.CustomerRepository;
 import com.online.booking.core.repository.ItemRepository;
 import com.online.booking.core.repository.OrderRepository;
+import com.online.booking.core.repository.CustomerRepository;
+import org.hamcrest.Matchers;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import test.online.booking.AbstractIntegrationTest;
 
 
 /**
  * Integration tests for {@link OrderRepository}.
- * 
+ *
  * @author
  */
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OrderRepositoryIntegrationTest extends AbstractIntegrationTest {
 
-	@Autowired
-	OrderRepository orderRepository;
+	private static final String email = "dave@dmband.com";
 
 	@Autowired
-	ItemRepository 	itemRepository;
+	OrderRepository 	orderRepository;
 
 	@Autowired
-	CustomerRepository customerRepository;
+	ItemRepository 		itemRepository;
 
+	@Autowired
+	CustomerRepository 	customerRepository;
 
 	@Test
-	public void createOrder() {
+	public void Test1_createOrder() {
 
-		Optional<Customer> user = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
+		Customer customer = customerRepository.findByEmailAddress(new EmailAddress(email));
 
 		Item iPad = itemRepository.findAll().iterator().next();
 
-		Order order = new Order(user.get(), user.get().getAddresses().iterator().next());
+		Order order = new Order(customer, customer.getAddresses().iterator().next());
 		order.add(new OrderItem(iPad));
 
 		order = orderRepository.save(order);
-		assertTrue( order.getId() != null );
+
+		assertNotNull( order );
+		assertThat( order.getId(), is(notNullValue()) );
 	}
 
 	@Test
-	public void readOrder() {
+	public void Test2_readOrder() {
 
-		Optional<Customer> dave = customerRepository.findByEmailAddress(new EmailAddress("dave@dmband.com"));
-		List<Order> orders = orderRepository.findByCustomer(dave.get());
+		Customer dave = customerRepository.findByEmailAddress(new EmailAddress(email));
+		List<Order> orders = orderRepository.findByCustomer(dave);
 
-		Order order = orders.iterator().next();
-		OrderItem orderItem = order.getLineItems().stream().findFirst().orElse(null);
+		assertNotNull( orders );
 
-		assertNotNull(orderItem);
+		Order firstOrder = orders.iterator().next();
 
-		Item iPad = itemRepository.findAll().iterator().next();
+		Customer customer = firstOrder.getCustomer();
+		assertThat(customer, Matchers.is(dave));
 
-		assertEquals( iPad.getPrice(), orderItem.getTotal() );
+		Set<OrderItem> orderItems = firstOrder.getLineItems();
+		assertNotNull(orderItems);
 	}
 }

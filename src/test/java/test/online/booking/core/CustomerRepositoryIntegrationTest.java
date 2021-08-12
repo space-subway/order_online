@@ -19,8 +19,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 import com.online.booking.core.domain.Address;
-import com.online.booking.core.domain.Customer;
 import com.online.booking.core.domain.EmailAddress;
+import com.online.booking.core.domain.Customer;
 import com.online.booking.core.repository.CustomerRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +38,19 @@ public class CustomerRepositoryIntegrationTest extends AbstractIntegrationTest {
 	CustomerRepository customerRepository;
 
 	@Test
-	public void customerReadWriteTest() {
+	public void savesCustomerCorrectly() {
+
 		EmailAddress email = new EmailAddress("alicia@keys.com");
 
-		Customer alicia = new Customer("Alicia", "Keys");
-		alicia.setEmailAddress(email);
-		alicia.add(new Address("27 Broadway", "New York", "United States"));
+		Customer dave = new Customer("Alicia", "Keys");
+		dave.setEmailAddress(email);
+		dave.add(new Address("27 Broadway", "New York", "United States"));
 
-		Customer result = customerRepository.save(alicia);
+		Customer result = customerRepository.save(dave);
 		assertThat(result.getId(), is(notNullValue()));
 	}
 
-	/*@Test
+	@Test
 	public void readsCustomerByEmail() {
 
 		EmailAddress email = new EmailAddress("alicia@keys.com");
@@ -71,5 +72,5 @@ public class CustomerRepositoryIntegrationTest extends AbstractIntegrationTest {
 		anotherDave.setEmailAddress(dave.getEmailAddress());
 
 		customerRepository.save(anotherDave);
-	}*/
+	}
 }

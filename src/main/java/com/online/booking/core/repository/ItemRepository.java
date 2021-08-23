@@ -29,5 +29,5 @@ import java.util.Set;
 
 @Repository
 public interface ItemRepository extends MongoRepository<Item, String> {
-    Set<Item> findByTittle(String tittle );
+    Set<Item> findByTitle(String title );
 }

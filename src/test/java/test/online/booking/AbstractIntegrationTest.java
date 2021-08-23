@@ -58,13 +58,51 @@ public abstract class AbstractIntegrationTest {
 		// Products
 		mongoTemplate.dropCollection("item");
 
-		Item iPad 		= new Item("iPad", new BigDecimal(499.0));
-		Item macBook 	= new Item( "MacBook Pro", new BigDecimal(1299.0) );
-		Item dock		= new Item( "Dock", new BigDecimal(49.0) );
+		Item iPad 		= new Item(
+								"iPad",
+									new BigDecimal(499.0),
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+								"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad " +
+								"minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
+								"commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit " +
+								"esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
+								"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+								"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad");
+
+		Item macBook 	= new Item(
+							"MacBook Pro",
+							new BigDecimal(1299.0),
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+						"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad " +
+						"minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
+						"commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit " +
+						"esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
+						"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+						"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad");
+
+		Item dock		= new Item( "Dock",
+									new BigDecimal(49.0),
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+						"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad " +
+						"minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
+						"commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit " +
+						"esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
+						"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+						"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad");
 
 		mongoTemplate.insert(iPad, "item");
 		mongoTemplate.insert(macBook, "item");
 		mongoTemplate.insert(dock, "item");
+
+		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0)), "item");
+		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0) ), "item");
+		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0)), "item");
+		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0) ), "item");
+		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0) ), "item");
+		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0)), "item");
 
 		// Orders
 		mongoTemplate.dropCollection("order");

@@ -58,7 +58,7 @@ public class ItemWebHandlerIntegrationTest extends AbstractWebHandlerIntegration
 
     @Test
     public void findProductByIdRestTest() {
-        Set<Item> items = itemRepository.findByTittle("iPad");
+        Set<Item> items = itemRepository.findByTitle("iPad");
 
         Item iPad = items.stream().findFirst().orElse(null);
 

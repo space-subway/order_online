@@ -49,7 +49,7 @@ public class ProductRepositoryIntegrationTest extends AbstractIntegrationTest {
 		product = itemRepository.save(product);
 
 		assertNotNull( product );
-		assertThat( product.getTittle(), Matchers.is("Camera bag") );
+		assertThat( product.getTitle(), Matchers.is("Camera bag") );
 		assertThat( product.getPrice(), Matchers.is(new BigDecimal(49.99)) );
 	}
 
@@ -57,12 +57,12 @@ public class ProductRepositoryIntegrationTest extends AbstractIntegrationTest {
 	@Test
 	public void test2_findProductByTittle() {
 
-		Set<Item> items = itemRepository.findByTittle("Dock");
+		Set<Item> items = itemRepository.findByTitle("Dock");
 
 		Item product = items.stream().findFirst().orElse(null);
 
 		assertNotNull( product );
-		assertThat( product.getTittle(), Matchers.is("Dock") );
+		assertThat( product.getTitle(), Matchers.is("Dock") );
 		assertThat( product.getPrice(), Matchers.is(new BigDecimal(49.0)) );
 	}
 }

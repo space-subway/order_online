@@ -43,4 +43,16 @@ public class ItemService {
     public List<Item> readAll(){
         return repository.findAll();
     }
+
+    public Item incViewCount( Item item ){
+
+        Integer viewCount = item.getViewCount();
+
+        if( viewCount == null ) viewCount = 0;
+
+        viewCount++;
+        item.setViewCount( viewCount );
+
+        return repository.save( item );
+    }
 }

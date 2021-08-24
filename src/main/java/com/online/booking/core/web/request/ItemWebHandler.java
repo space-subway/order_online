@@ -66,7 +66,12 @@ public class ItemWebHandler {
     ) throws UnknownIdentifierException {
         Optional<Item> o = itemService.readById( id );
 
-        if( o.isPresent() ) return new ResponseEntity<>(o.get(), HttpStatus.OK );
+        if( o.isPresent() ) {
+            //increment view count
+            Item item = itemService.incViewCount( o.get() );
+
+            return new ResponseEntity<>(o.get(), HttpStatus.OK );
+        }
 
         throw new UnknownIdentifierException( id );
     }

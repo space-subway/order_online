@@ -43,9 +43,7 @@ public class Item extends AbstractDocument {
     private BigDecimal  price;
     @Min(0)
     private Integer     viewCount;
-    @Min(0)
-    @Max(5)
-    private Float       rating;
+    private Rating      rating;
 
     /**
      * Creates a new {@link Item} with the given name.
@@ -74,6 +72,8 @@ public class Item extends AbstractDocument {
         this.price = price;
         this.description = description;
         this.descriptionShort = descriptionShort;
+        this.viewCount = 0;
+        this.rating = new Rating( 0, 0, 0, 0, 0 );
     }
 
     /**
@@ -124,7 +124,21 @@ public class Item extends AbstractDocument {
      *
      * @return
      */
-    public Float getRating() { return rating; }
+    public Rating getRating() { return rating; }
 
-    public void setRating(Float rating) { this.rating = rating; }
+    public void setRating(
+            Integer oneStarCount,
+            Integer twoStarCount,
+            Integer threeStarCount,
+            Integer fourStarCount,
+            Integer fiveStarCount
+    ) {
+        Rating rating = new Rating( oneStarCount,
+                                    twoStarCount,
+                                    threeStarCount,
+                                    fourStarCount,
+                                    fiveStarCount );
+
+        this.rating = rating;
+    }
 }

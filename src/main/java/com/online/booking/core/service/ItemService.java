@@ -18,7 +18,6 @@ package com.online.booking.core.service;
 
 import com.online.booking.core.domain.Item;
 import com.online.booking.core.repository.ItemRepository;
-import com.online.booking.core.web.request.exception.ItemCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,12 +34,7 @@ public class ItemService {
     @Autowired
     private ItemRepository repository;
 
-    public void create( Item item ) throws ItemCreationException, NullPointerException {
-
-        if( item == null ) throw new NullPointerException("Item must not be null!");
-
-        if( repository.save( item ) == null ) throw new ItemCreationException( item.toString() );
-    }
+    public Item create( Item item ) { return repository.save( item ); }
 
     public Optional<Item> readById( String id ){
         return repository.findById( id );

@@ -18,6 +18,7 @@ package com.online.booking.core.web.request;
 
 import com.online.booking.core.domain.Item;
 import com.online.booking.core.repository.ItemRepository;
+import com.online.booking.core.service.ItemService;
 import com.online.booking.core.web.request.exception.ItemCreationException;
 import com.online.booking.core.web.request.exception.UnknownIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ import java.util.Optional;
 public class ItemWebHandler {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemService itemService;
 
     /**
      * Return list of all available items
@@ -47,7 +48,7 @@ public class ItemWebHandler {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public List<Item> list(){
-        return itemRepository.findAll();
+        return itemService.readAll();
     }
 
     /**
@@ -63,7 +64,7 @@ public class ItemWebHandler {
     public ResponseEntity<Item> details(
             @PathVariable( value = "id" ) String id
     ) throws UnknownIdentifierException {
-        Optional<Item> o = itemRepository.findById( id );
+        Optional<Item> o = itemService.readById( id );
 
         if( o.isPresent() ) return new ResponseEntity<>(o.get(), HttpStatus.OK );
 
@@ -88,7 +89,7 @@ public class ItemWebHandler {
     )
     public ResponseEntity<Item> create(@RequestBody Item item) throws ItemCreationException {
 
-        Item createdItem = itemRepository.insert(item);
+        Item createdItem = itemService.create(item);
 
         if( createdItem == null ) throw new ItemCreationException( Item.class.getName() );
 

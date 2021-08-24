@@ -35,14 +35,16 @@ public class Item extends AbstractDocument {
 
     @NotNull(message = "is required")
     private String      title;
-    private String      description, descriptionShort;
     @NotNull(message = "is required")
-    @Min(value = 1l, message = "must be more than 1")
+    private String      description;
+    private String descriptionShort;
+    @NotNull(message = "is required")
+    @Min(value = 0, message = "price must be more than 0")
     private BigDecimal  price;
     @Min(0)
     private Integer     viewCount;
-    @Min(0l)
-    @Max(5l)
+    @Min(0)
+    @Max(5)
     private Float       rating;
 
     /**

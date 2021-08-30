@@ -17,6 +17,7 @@
 package com.online.booking.core.domain;
 
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.util.Assert;
 
@@ -45,6 +46,9 @@ public class Item extends AbstractDocument {
     private Integer     viewCount;
     private Rating      rating;
 
+    @DBRef
+    private ItemCategory category;
+
     /**
      * Creates a new {@link Item} with the given name.
      *
@@ -53,6 +57,18 @@ public class Item extends AbstractDocument {
      */
     public Item(String tittle, BigDecimal price) {
         this(tittle, price, null, null);
+    }
+
+    /**
+     * Creates a new {@link Item} with the given name.
+     *
+     * @param title must not be {@literal null} or empty.
+     * @param price must not be {@literal null} or less than or equal to zero.
+     * @param category
+     */
+    public Item(String title, BigDecimal price, ItemCategory category) {
+        this(title, price, null, null);
+        this.category = category;
     }
 
     /**
@@ -140,5 +156,13 @@ public class Item extends AbstractDocument {
                                     fiveStarCount );
 
         this.rating = rating;
+    }
+
+    public ItemCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ItemCategory category) {
+        this.category = category;
     }
 }

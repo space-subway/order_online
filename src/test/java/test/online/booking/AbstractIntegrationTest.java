@@ -55,6 +55,14 @@ public abstract class AbstractIntegrationTest {
 		dave.add(address);
 		mongoTemplate.insert( dave, "customer" );
 
+		//Product categories
+		mongoTemplate.dropCollection("category");
+		ItemCategory itemCategory1 = new ItemCategory("category 1");
+		ItemCategory itemCategory2 = new ItemCategory("category 2");
+
+		mongoTemplate.insert( itemCategory1, "category" );
+		mongoTemplate.insert( itemCategory2, "category" );
+
 		// Products
 		mongoTemplate.dropCollection("item");
 
@@ -69,6 +77,7 @@ public abstract class AbstractIntegrationTest {
 								"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
 					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
 								"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad");
+		iPad.setCategory( itemCategory1 );
 
 		Item macBook 	= new Item(
 							"MacBook Pro",
@@ -81,6 +90,7 @@ public abstract class AbstractIntegrationTest {
 						"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
 						"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad");
+		macBook.setCategory( itemCategory1 );
 
 		Item dock		= new Item( "Dock",
 									new BigDecimal(49.0),
@@ -92,17 +102,18 @@ public abstract class AbstractIntegrationTest {
 						"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
 						"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad");
+		dock.setCategory( itemCategory1 );
 
 		mongoTemplate.insert(iPad, "item");
 		mongoTemplate.insert(macBook, "item");
 		mongoTemplate.insert(dock, "item");
 
-		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0)), "item");
-		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0) ), "item");
-		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0)), "item");
-		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0) ), "item");
-		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0) ), "item");
-		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0)), "item");
+		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0), itemCategory2), "item");
+		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0), itemCategory2 ), "item");
+		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0), itemCategory2), "item");
+		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0), itemCategory2 ), "item");
+		mongoTemplate.insert(new Item( "Dock", new BigDecimal(49.0), itemCategory2 ), "item");
+		mongoTemplate.insert(new Item("iPad", new BigDecimal(499.0), itemCategory2), "item");
 
 		// Orders
 		mongoTemplate.dropCollection("order");

@@ -28,6 +28,6 @@
 
     <bean id="deployProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean"/>
 
-    <util:properties id="deployProperties" location="file:src/main/webapp/WEB-INF/spring.properties"/>
+    <util:properties id="deployProperties" location="classpath:spring.properties"/>
 
 </beans>

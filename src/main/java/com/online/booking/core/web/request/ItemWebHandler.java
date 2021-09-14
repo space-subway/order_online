@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/item")
 public class ItemWebHandler {
 
     @Autowired

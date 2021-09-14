@@ -16,6 +16,8 @@
 
 package com.online.booking.core.domain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -64,5 +66,19 @@ public class AbstractDocument {
     @Override
     public int hashCode() {
         return id == null ? 0 : id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        try{
+            String json = mapper.writeValueAsString( this );
+
+            return json;
+        } catch ( JsonProcessingException e ){
+            e.printStackTrace();
+        }
+
+        return super.toString();
     }
 }

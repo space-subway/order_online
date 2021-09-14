@@ -31,7 +31,7 @@ import java.math.BigDecimal;
  *
  */
 
-@Document( "item" )
+@Document( collection = "item" )
 public class Item extends AbstractDocument {
 
     @NotNull(message = "is required")

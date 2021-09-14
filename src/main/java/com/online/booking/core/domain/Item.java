@@ -16,12 +16,12 @@
 
 package com.online.booking.core.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.util.Assert;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -31,17 +31,23 @@ import java.math.BigDecimal;
  *
  */
 
-@Document
+@Document( "item" )
 public class Item extends AbstractDocument {
 
     @NotNull(message = "is required")
+    @NotEmpty
     private String      title;
+
     @NotNull(message = "is required")
+    @NotEmpty
     private String      description;
+
     private String descriptionShort;
+
     @NotNull(message = "is required")
     @Min(value = 0, message = "price must be more than 0")
     private BigDecimal  price;
+
     @Min(0)
     private Integer     viewCount;
     private Rating      rating;

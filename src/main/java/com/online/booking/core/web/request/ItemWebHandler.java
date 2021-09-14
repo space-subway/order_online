@@ -17,16 +17,20 @@
 package com.online.booking.core.web.request;
 
 import com.online.booking.core.domain.Item;
-import com.online.booking.core.repository.ItemRepository;
 import com.online.booking.core.service.ItemService;
+import com.online.booking.core.utils.BindingError;
 import com.online.booking.core.web.request.exception.ItemCreationException;
 import com.online.booking.core.web.request.exception.UnknownIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,39 +96,33 @@ public class ItemWebHandler {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Item> create(@RequestBody Item item) throws ItemCreationException {
+    public ResponseEntity<Object> create(
+            @Valid @RequestBody Item item,
+            BindingResult bindingResult
+    ) throws ItemCreationException {
 
-        Item createdItem = itemService.create(item);
+        if( bindingResult.hasErrors() ){
 
-        if( createdItem == null ) throw new ItemCreationException( Item.class.getName() );
+            List<FieldError> errors = bindingResult.getFieldErrors();
 
-        return new ResponseEntity<>( createdItem, HttpStatus.CREATED );
+            List<BindingError> validFormErrList = new ArrayList<>(errors.size());
+
+            errors.forEach( e ->
+                    validFormErrList.add( new BindingError( e.getField(), e.getDefaultMessage() ) )
+            );
+
+            return new ResponseEntity<>( validFormErrList, HttpStatus.NOT_ACCEPTABLE );
+
+        } else {
+
+            if( item.getCategory() == null ) throw new ItemCreationException( Item.class.getName() );
+
+            Item createdItem = itemService.create( item );
+
+            if( createdItem == null ) throw new ItemCreationException( Item.class.getName() );
+
+            return new ResponseEntity<>( createdItem, HttpStatus.CREATED );
+        }
     }
 
-    /**
-     * Delete item by id
-     *
-     * @return Code of operation
-     */
-    /*@RequestMapping(
-            value = "/delete/{id}",
-            method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseMessage delete(
-            @PathVariable( value = "id" ) String id
-    ){
-        Optional<Item> o = itemRepository.findById( id );
-
-        ResponseMessage message = new ResponseMessage();
-        if( !o.isPresent() ) {
-            message.setMessage( "error" );
-            return message;
-        }
-
-        itemRepository.delete(o.get());
-
-        message.setMessage( "ok" );
-        return message;
-    }*/
 }

@@ -17,6 +17,8 @@
 package com.online.booking.core.web.request;
 
 import com.online.booking.core.domain.Item;
+import com.online.booking.core.domain.ItemCategory;
+import com.online.booking.core.service.ItemCategoryService;
 import com.online.booking.core.service.ItemService;
 import com.online.booking.core.utils.BindingError;
 import com.online.booking.core.web.request.exception.ItemCreationException;
@@ -40,6 +42,9 @@ public class ItemWebHandler {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private ItemCategoryService itemCategoryService;
 
     /**
      * Return list of all available items
@@ -85,12 +90,6 @@ public class ItemWebHandler {
      *
      * @return Code of operation
      */
-
-    /**
-     * Create new item and save it
-     *
-     * @return Code of operation
-     */
     @RequestMapping(
             value = "/create",
             method = RequestMethod.POST,
@@ -123,6 +122,61 @@ public class ItemWebHandler {
 
             return new ResponseEntity<>( createdItem, HttpStatus.CREATED );
         }
+    }
+
+    /**
+     * Remove item by id
+     *
+     * @return id of deleted item
+     */
+    @RequestMapping(
+            value = "/remove/{id}",
+            method = RequestMethod.DELETE
+    )
+    public @ResponseBody String deleteItem(
+            @PathVariable( value = "id" ) String id
+    ) throws UnknownIdentifierException {
+
+        if( !itemService.remove( id ) ) throw new UnknownIdentifierException( id );
+
+        return id;
+    }
+
+    /**
+     * Create new item category and save it
+     *
+     * @return Code of operation and new item category
+     */
+    @RequestMapping(
+            value = "/create/category",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<ItemCategory> createItemCategory(
+            @RequestBody ItemCategory itemCategory
+    ){
+        ItemCategory category = itemCategoryService.save( itemCategory );
+
+        if( category == null ) return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR );
+
+        return new ResponseEntity<>(category, HttpStatus.OK);
+    }
+
+    /**
+     * Remove item category by id
+     *
+     * @return id of deleted item category
+     */
+    @RequestMapping(
+            value = "/category/remove/{id}",
+            method = RequestMethod.DELETE
+    )
+    public @ResponseBody String deleteItemCategory(
+            @PathVariable( value = "id" ) String id
+    ) throws UnknownIdentifierException {
+        if( !itemCategoryService.remove( id ) ) throw new UnknownIdentifierException( id );
+
+        return id;
     }
 
 }

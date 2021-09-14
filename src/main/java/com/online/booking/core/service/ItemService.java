@@ -44,6 +44,17 @@ public class ItemService {
         return repository.findAll();
     }
 
+    public boolean remove( String id ){
+
+        Optional<Item> item = repository.findById( id );
+
+        if( !item.isPresent() ) return false;
+
+        repository.delete( item.get() );
+
+        return true;
+    }
+
     public Item incViewCount( Item item ){
 
         Integer viewCount = item.getViewCount();

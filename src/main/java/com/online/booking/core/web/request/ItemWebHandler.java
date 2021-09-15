@@ -110,7 +110,7 @@ public class ItemWebHandler {
                     validFormErrList.add( new BindingError( e.getField(), e.getDefaultMessage() ) )
             );
 
-            return new ResponseEntity<>( validFormErrList, HttpStatus.NOT_ACCEPTABLE );
+            return new ResponseEntity<>( validFormErrList, HttpStatus.BAD_REQUEST );
 
         } else {
 

@@ -1,24 +1,34 @@
 package com.online.booking.core.web.model;
 
+import com.online.booking.core.domain.Item;
+
 import java.math.BigDecimal;
 
-public class ItemList {
+public class ItemListModel {
 
     private String      id;
     private String      title;
     private String      descriptionShort;
     private BigDecimal  price;
-    private Rating      rating;
+    private RatingModel ratingModel;
 
-    public ItemList() {
+    public ItemListModel() {
     }
 
-    public ItemList(String id, String title, String descriptionShort, BigDecimal price, Rating rating) {
+    public ItemListModel(String id, String title, String descriptionShort, BigDecimal price, RatingModel ratingModel) {
         this.id = id;
         this.title = title;
         this.descriptionShort = descriptionShort;
         this.price = price;
-        this.rating = rating;
+        this.ratingModel = ratingModel;
+    }
+
+    public ItemListModel(Item item) {
+        this.id                 = item.getId();
+        this.title              = item.getTitle();
+        this.descriptionShort   = item.getDescriptionShort();
+        this.price              = item.getPrice();
+        this.ratingModel = new RatingModel(item.getRating());
     }
 
     public String getId() {
@@ -53,11 +63,11 @@ public class ItemList {
         this.price = price;
     }
 
-    public Rating getRating() {
-        return rating;
+    public RatingModel getRatingModel() {
+        return ratingModel;
     }
 
-    public void setRating(Rating rating) {
-        this.rating = rating;
+    public void setRatingModel(RatingModel ratingModel) {
+        this.ratingModel = ratingModel;
     }
 }

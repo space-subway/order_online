@@ -1,13 +1,13 @@
 package com.online.booking.core.web.model;
 
-public class ItemCategory {
+public class ItemCategoryModel {
     private String id;
     private String name;
 
-    public ItemCategory() {
+    public ItemCategoryModel() {
     }
 
-    public ItemCategory(String id, String name) {
+    public ItemCategoryModel(String id, String name) {
         this.id = id;
         this.name = name;
     }

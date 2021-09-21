@@ -1,21 +1,31 @@
 package com.online.booking.core.web.model;
 
-public class Rating {
+import com.online.booking.core.domain.Rating;
+
+public class RatingModel {
     private int oneStarCount;
     private int twoStarCount;
     private int threeStarCount;
     private int fourStarCount;
     private int fiveStarCount;
 
-    public Rating() {
+    public RatingModel() {
     }
 
-    public Rating(int oneStarCount, int twoStarCount, int threeStarCount, int fourStarCount, int fiveStarCount) {
-        this.oneStarCount = oneStarCount;
-        this.twoStarCount = twoStarCount;
+    public RatingModel(int oneStarCount, int twoStarCount, int threeStarCount, int fourStarCount, int fiveStarCount) {
+        this.oneStarCount   = oneStarCount;
+        this.twoStarCount   = twoStarCount;
         this.threeStarCount = threeStarCount;
-        this.fourStarCount = fourStarCount;
-        this.fiveStarCount = fiveStarCount;
+        this.fourStarCount  = fourStarCount;
+        this.fiveStarCount  = fiveStarCount;
+    }
+
+    public RatingModel(Rating rating) {
+        this.oneStarCount   = rating.getOneStarCount();
+        this.twoStarCount   = rating.getTwoStarCount();
+        this.threeStarCount = rating.getThreeStarCount();
+        this.fourStarCount  = rating.getFourStarCount();
+        this.fiveStarCount  = rating.getFiveStarCount();
     }
 
     public int getOneStarCount() {

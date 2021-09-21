@@ -23,6 +23,8 @@ import com.online.booking.core.service.ItemService;
 import com.online.booking.core.utils.BindingError;
 import com.online.booking.core.web.exception.ItemCreationException;
 import com.online.booking.core.web.exception.UnknownIdentifierException;
+import com.online.booking.core.web.model.ItemDetailsModel;
+import com.online.booking.core.web.model.ItemListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,6 +37,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/item")
@@ -56,8 +59,14 @@ public class ItemWebHandler {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Item> list(){
-        return itemService.readAll();
+    public ResponseEntity<List<ItemListModel>> list(){
+        List<Item> items = itemService.readAll();
+
+        List<ItemListModel> ret = items.stream().map(
+                item -> new ItemListModel( item )
+        ).collect(Collectors.toList());
+
+        return new ResponseEntity<>( ret, HttpStatus.OK );
     }
 
     /**
@@ -70,7 +79,7 @@ public class ItemWebHandler {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Item> details(
+    public ResponseEntity<ItemDetailsModel> details(
             @PathVariable( value = "id" ) String id
     ) throws UnknownIdentifierException {
         Optional<Item> o = itemService.readById( id );
@@ -79,7 +88,9 @@ public class ItemWebHandler {
             //increment view count
             Item item = itemService.incViewCount( o.get() );
 
-            return new ResponseEntity<>(o.get(), HttpStatus.OK );
+            ItemDetailsModel ret = new ItemDetailsModel( item );
+
+            return new ResponseEntity<>( ret, HttpStatus.OK );
         }
 
         throw new UnknownIdentifierException( id );

@@ -6,21 +6,23 @@ import java.math.BigDecimal;
 
 public class ItemListModel {
 
-    private String      id;
-    private String      title;
-    private String      descriptionShort;
-    private BigDecimal  price;
-    private RatingModel ratingModel;
+    private String              id;
+    private String              title;
+    private String              descriptionShort;
+    private BigDecimal          price;
+    private ItemCategoryModel   category;
+
 
     public ItemListModel() {
     }
 
-    public ItemListModel(String id, String title, String descriptionShort, BigDecimal price, RatingModel ratingModel) {
+    public ItemListModel(String id, String title, String descriptionShort, BigDecimal price, ItemCategoryModel category) {
         this.id = id;
         this.title = title;
         this.descriptionShort = descriptionShort;
         this.price = price;
-        this.ratingModel = ratingModel;
+        this.category = category;
+
     }
 
     public ItemListModel(Item item) {
@@ -28,7 +30,7 @@ public class ItemListModel {
         this.title              = item.getTitle();
         this.descriptionShort   = item.getDescriptionShort();
         this.price              = item.getPrice();
-        this.ratingModel = new RatingModel(item.getRating());
+        this.category           = new ItemCategoryModel(item.getCategory());
     }
 
     public String getId() {
@@ -63,11 +65,11 @@ public class ItemListModel {
         this.price = price;
     }
 
-    public RatingModel getRatingModel() {
-        return ratingModel;
+    public ItemCategoryModel getCategory() {
+        return category;
     }
 
-    public void setRatingModel(RatingModel ratingModel) {
-        this.ratingModel = ratingModel;
+    public void setCategory(ItemCategoryModel category) {
+        this.category = category;
     }
 }

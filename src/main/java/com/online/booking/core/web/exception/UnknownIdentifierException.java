@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.web.request.exception;
+package com.online.booking.core.web.exception;
 
-public class ItemCreationException extends Exception {
+public class UnknownIdentifierException extends Exception {
+    protected String identifier;
 
-    /**
-     * Constructor for any item creation exception
-     *
-     * @param className name of class creation of throws exception
-     */
-    public ItemCreationException(String className) {
-        super( className );
+    public static UnknownIdentifierException createWith(String identifier) {
+        return new UnknownIdentifierException(identifier);
+    }
+
+    public UnknownIdentifierException(String identifier) {
+        this.identifier = identifier;
     }
 
     @Override
     public String getMessage() {
-        return "Failed while creation new Item: " + getMessage();
+        return "Identifier '" + identifier + "' not found";
     }
+
 }

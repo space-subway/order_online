@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.web.request.exception;
+package com.online.booking.core.web.exception;
 
-public class UnknownIdentifierException extends Exception {
-    protected String identifier;
+public class UserAlreadyExistException extends Exception {
 
-    public static UnknownIdentifierException createWith(String identifier) {
-        return new UnknownIdentifierException(identifier);
+    public UserAlreadyExistException() {
+        super();
     }
 
-    public UnknownIdentifierException(String identifier) {
-        this.identifier = identifier;
+
+    public UserAlreadyExistException(String message) {
+        super(message);
     }
 
-    @Override
-    public String getMessage() {
-        return "Identifier '" + identifier + "' not found";
-    }
 
+    public UserAlreadyExistException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

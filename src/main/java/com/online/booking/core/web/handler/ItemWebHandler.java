@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.web.request;
+package com.online.booking.core.web.handler;
 
 import com.online.booking.core.domain.Item;
 import com.online.booking.core.domain.ItemCategory;
 import com.online.booking.core.service.ItemCategoryService;
 import com.online.booking.core.service.ItemService;
 import com.online.booking.core.utils.BindingError;
-import com.online.booking.core.web.request.exception.ItemCreationException;
-import com.online.booking.core.web.request.exception.UnknownIdentifierException;
+import com.online.booking.core.web.exception.ItemCreationException;
+import com.online.booking.core.web.exception.UnknownIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

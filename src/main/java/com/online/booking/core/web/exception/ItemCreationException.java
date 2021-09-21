@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.web.request.exception;
+package com.online.booking.core.web.exception;
 
-public class UserAlreadyExistException extends Exception {
+public class ItemCreationException extends Exception {
 
-    public UserAlreadyExistException() {
-        super();
+    /**
+     * Constructor for any item creation exception
+     *
+     * @param className name of class creation of throws exception
+     */
+    public ItemCreationException(String className) {
+        super( className );
     }
 
-
-    public UserAlreadyExistException(String message) {
-        super(message);
-    }
-
-
-    public UserAlreadyExistException(String message, Throwable cause) {
-        super(message, cause);
+    @Override
+    public String getMessage() {
+        return "Failed while creation new Item: " + getMessage();
     }
 }

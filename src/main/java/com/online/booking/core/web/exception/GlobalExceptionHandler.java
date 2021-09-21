@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.online.booking.core.web.request.exception;
+package com.online.booking.core.web.exception;
 
 import com.online.booking.core.utils.ApiError;
 import org.slf4j.Logger;

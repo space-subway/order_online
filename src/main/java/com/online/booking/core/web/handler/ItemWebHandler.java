@@ -97,6 +97,32 @@ public class ItemWebHandler {
     }
 
     /**
+     * Increment item view count
+     *
+     * @param id
+     * @return
+     * @throws UnknownIdentifierException
+     */
+    @RequestMapping(
+            value = "/{id}/view_cnt_inc",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Item> viewCountInc(
+            @PathVariable( value = "id" ) String id
+    ) throws UnknownIdentifierException {
+        Optional<Item> o = itemService.readById( id );
+
+        if( o.isPresent() ){
+            //increment view count
+            Item item = itemService.incViewCount( o.get() );
+            return new ResponseEntity<>(item, HttpStatus.OK);
+        }
+
+        throw new UnknownIdentifierException( id );
+    }
+
+    /**
      * Create new item and save it
      *
      * @return Code of operation

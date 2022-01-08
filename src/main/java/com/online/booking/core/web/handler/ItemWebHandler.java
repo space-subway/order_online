@@ -85,10 +85,7 @@ public class ItemWebHandler {
         Optional<Item> o = itemService.readById( id );
 
         if( o.isPresent() ) {
-            //increment view count
-            Item item = itemService.incViewCount( o.get() );
-
-            ItemDetailsModel ret = new ItemDetailsModel( item );
+            ItemDetailsModel ret = new ItemDetailsModel( o.get() );
 
             return new ResponseEntity<>( ret, HttpStatus.OK );
         }
